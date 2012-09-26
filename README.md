@@ -1,6 +1,7 @@
-UltraLogger
-===========
-The ultimate craftbukkit logging plugin
+UltraLogger v2
+==============
+Rewrite of the ultimate craftbukkit logging plugin
+Adapting to a new point of view :)
 ***
 
 The plugin can be found at http://dev.bukkit.org/server-mods/ultralogger/
