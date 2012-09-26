@@ -35,6 +35,34 @@ public class LoggerFile {
 					e1.printStackTrace();
 				}
 			}
+			else if (max>0){
+				try {
+					int ten = max/10;
+					ArrayList<String> last = new ArrayList<String>();
+					int lines = 0;
+					BufferedReader r = new BufferedReader(new FileReader(log));
+					String s= r.readLine();
+					while(s!=null){
+						last.add(s);
+						lines++;
+						if(last.size()>ten){
+							last.remove(last.size()-1);
+						}
+						s=r.readLine();
+					}
+					r.close();
+					if(lines>max){
+						out = new BufferedWriter(new FileWriter(log));
+						for(Iterator<String> i = last.iterator();i.hasNext();out.append(i.next()));
+						out.flush();
+						out.close();
+					}
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			try {
 				out = new BufferedWriter(new FileWriter(log,is));
 			} catch (FileNotFoundException e) {
@@ -51,7 +79,7 @@ public class LoggerFile {
 					e.printStackTrace();
 				}
 			}
-			else{
+			else if (max>0){
 				try {
 					int ten = max/10;
 					ArrayList<String> last = new ArrayList<String>();
@@ -105,6 +133,34 @@ public class LoggerFile {
 				e1.printStackTrace();
 			}
 		}
+		else if (max>0){
+			try {
+				int ten = max/10;
+				ArrayList<String> lastr = new ArrayList<String>();
+				int lines = 0;
+				BufferedReader r = new BufferedReader(new FileReader(log));
+				String s= r.readLine();
+				while(s!=null){
+					lastr.add(s);
+					lines++;
+					if(lastr.size()>ten){
+						lastr.remove(lastr.size()-1);
+					}
+					s=r.readLine();
+				}
+				r.close();
+				if(lines>max){
+					out = new BufferedWriter(new FileWriter(log));
+					for(Iterator<String> i = lastr.iterator();i.hasNext();out.append(i.next()));
+					out.flush();
+					out.close();
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		try {
 			out = new BufferedWriter(new FileWriter(log,is));
 		} catch (FileNotFoundException e) {
@@ -115,10 +171,12 @@ public class LoggerFile {
 	}
 	
 	private int count =0;
+	public static DateFormat d = DateFormat.getInstance();
 	
 	public void log(String s){
+		String time = d.format(new Date(System.currentTimeMillis()))+" ";;
 		try {
-			out.append(s);
+			out.append(time+s);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

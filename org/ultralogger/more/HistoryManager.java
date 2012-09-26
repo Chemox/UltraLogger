@@ -56,7 +56,7 @@ public class HistoryManager implements Listener{
 	public void onBreak(BlockBreakEvent e){
 		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		String name = e.getPlayer().getName();
-		if(e.getPlayer().isOp()){
+		if(MainLogger.isAdmin(e.getPlayer())){
 			name="[Admin] "+name;
 		}
 		name="("+e.getPlayer().getGameMode().name()+")"+name;
@@ -84,7 +84,7 @@ public class HistoryManager implements Listener{
 	public void onPlace(BlockPlaceEvent e){
 		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		String name = e.getPlayer().getName();
-		if(e.getPlayer().isOp()){
+		if(MainLogger.isAdmin(e.getPlayer())){
 			name="[Admin] "+name;
 		}
 		name="("+e.getPlayer().getGameMode().name()+")"+name;
@@ -112,7 +112,7 @@ public class HistoryManager implements Listener{
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e){
 		Player p =e.getPlayer();
-		if(e.getAction()!=Action.RIGHT_CLICK_BLOCK||!e.hasItem()||!plugin.canSeeHistory(p)){ return;}
+		if(e.getAction()!=Action.RIGHT_CLICK_BLOCK||!e.hasItem()||!MainLogger.canSeeHistory(p)){ return;}
 		int id = e.getPlayer().getItemInHand().getTypeId();
 		if(id!=itemID){ return ;}
 		times++;
