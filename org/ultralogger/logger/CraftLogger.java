@@ -1,6 +1,7 @@
 package org.ultralogger.logger;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.util.Date;
 
 import org.bukkit.entity.Player;
@@ -30,27 +31,24 @@ public class CraftLogger implements Listener{
 	
 	@EventHandler
 	public void onBrew(BrewEvent e){
-		
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		BrewerInventory i =e.getContents();
-		out.log(plugin.translate("brew")+" "+i.getItem(0)+","+i.getItem(1)+","+i.getItem(2));
+		out.log(time+" "+plugin.translate("brew")+" "+i.getItem(0)+" "+plugin.translate("with")+" "+i.getItem(1));
 	}
 	@EventHandler
 	public void onCraft(CraftItemEvent e){
-		
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		String name ="";
 		Player p =(Player) e.getView().getPlayer();
 		if(p!=null){
 			name =" "+p.getName();
-			out.log(name+" "+plugin.translate("craft.item")+" "+e.getRecipe().getResult().toString()+MainLogger.transformToFlatLoc(p.getLocation()));
 		}
-		else{
-			out.log(name+" "+plugin.translate("craft.item")+" "+e.getRecipe().getResult().toString());
-		}
-		
+		out.log(time+name+" "+plugin.translate("craft.item")+" "+e.getRecipe().getResult().toString());
 	}
 	@EventHandler
 	public void onSmelt(FurnaceSmeltEvent e){
-		out.log(plugin.translate("furnace.smelt")+" "+e.getResult().toString());
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
+		out.log(time+" "+plugin.translate("furnace.smelt")+" "+e.getResult().toString());
 	}
 	public void disable(){
 		out.close();

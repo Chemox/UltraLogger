@@ -1,6 +1,7 @@
 package org.ultralogger.logger;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.util.Date;
 
 import org.bukkit.event.EventHandler;
@@ -28,16 +29,16 @@ public class CommandLogger implements Listener{
 	
 	@EventHandler
 	public void onCommand(PlayerCommandPreprocessEvent e){
-		
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		String name = e.getPlayer().getName();
-		if(MainLogger.isAdmin(e.getPlayer())){
+		if(e.getPlayer().isOp()){
 			name= "[Admin] "+name;
 		}
 		String display =" "+plugin.t.translate("try.command")+" --> ";
 		if(plugin.getServer().getPluginCommand(e.getMessage())!=null||isServerCommand(e.getMessage())){
 			display =" "+plugin.t.translate("command")+" --> ";
 		}
-		out.log(name+display+e.getMessage());
+		out.log(time+name+display+e.getMessage());
 	}
 	
 	private boolean isServerCommand(String message) {

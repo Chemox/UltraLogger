@@ -4,7 +4,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.ultralogger.MainLogger;
 import org.ultralogger.sql.SQL;
 
 public class CommandLogger implements Listener,Runnable{
@@ -20,7 +19,7 @@ public class CommandLogger implements Listener,Runnable{
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onCommand(PlayerCommandPreprocessEvent e){
 		String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
 		boolean display =false;
 		if(manager.getPlugin().getServer().getPluginCommand(e.getMessage())!=null||isServerCommand(e.getMessage())){
 			display =true;

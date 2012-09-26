@@ -1,6 +1,7 @@
 package org.ultralogger.logger;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.util.Date;
 
 import org.bukkit.event.EventHandler;
@@ -41,7 +42,7 @@ public class PluginLogger implements Listener{
 	
 	public void printListener() {
 		boolean timer =false;
-		
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		
 		//BLOCK EVENT
 				RegisteredListener[] listeners =BlockBreakEvent.getHandlerList().getRegisteredListeners();
@@ -51,7 +52,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block breack",i.getPriority());
@@ -63,7 +64,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block burn",i.getPriority());
@@ -75,7 +76,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block can build",i.getPriority());
@@ -87,7 +88,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block damage",i.getPriority());
@@ -99,7 +100,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block dispense",i.getPriority());
@@ -111,7 +112,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block fade",i.getPriority());
@@ -123,7 +124,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block form",i.getPriority());
@@ -135,7 +136,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block from to",i.getPriority());
@@ -147,7 +148,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block grow",i.getPriority());
@@ -159,7 +160,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block ignite",i.getPriority());
@@ -171,7 +172,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block physics",i.getPriority());
@@ -183,7 +184,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"piston extend",i.getPriority());
@@ -195,7 +196,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"piston retract",i.getPriority());
@@ -207,7 +208,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block place",i.getPriority());
@@ -219,7 +220,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block redstone",i.getPriority());
@@ -231,7 +232,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"block spread",i.getPriority());
@@ -243,7 +244,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity block form",i.getPriority());
@@ -255,7 +256,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"leaves decay",i.getPriority());
@@ -267,7 +268,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"note play",i.getPriority());
@@ -279,7 +280,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"sign change",i.getPriority());
@@ -292,7 +293,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"enchant item",i.getPriority());
@@ -304,7 +305,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"prepare item enchant",i.getPriority());
@@ -317,7 +318,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"creature spawn",i.getPriority());
@@ -329,7 +330,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"creeper power",i.getPriority());
@@ -341,7 +342,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity break door",i.getPriority());
@@ -353,7 +354,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity change block",i.getPriority());
@@ -365,7 +366,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity combust",i.getPriority());
@@ -377,7 +378,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity create portal",i.getPriority());
@@ -389,7 +390,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity damage",i.getPriority());
@@ -401,7 +402,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity death",i.getPriority());
@@ -413,7 +414,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity explode",i.getPriority());
@@ -425,7 +426,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity interact",i.getPriority());
@@ -437,7 +438,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity portal enter",i.getPriority());
@@ -449,7 +450,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity regain health",i.getPriority());
@@ -461,7 +462,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity shoot bow",i.getPriority());
@@ -473,7 +474,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity tame",i.getPriority());
@@ -485,7 +486,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity target",i.getPriority());
@@ -497,7 +498,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity target living entity",i.getPriority());
@@ -509,7 +510,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"entity teleport",i.getPriority());
@@ -521,7 +522,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"exp bottle",i.getPriority());
@@ -533,7 +534,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"explosion prime",i.getPriority());
@@ -545,7 +546,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"food level change",i.getPriority());
@@ -557,7 +558,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"item despawn",i.getPriority());
@@ -569,7 +570,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"item spawn",i.getPriority());
@@ -581,7 +582,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"pig zap",i.getPriority());
@@ -593,7 +594,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player death",i.getPriority());
@@ -605,7 +606,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"potion slash",i.getPriority());
@@ -617,7 +618,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"projectile hit",i.getPriority());
@@ -629,7 +630,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"projectile launch",i.getPriority());
@@ -641,7 +642,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"sheep dye wool",i.getPriority());
@@ -653,7 +654,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"sheep regrow wool",i.getPriority());
@@ -665,7 +666,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"slime split",i.getPriority());
@@ -678,7 +679,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"brew",i.getPriority());
@@ -690,7 +691,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"craft item",i.getPriority());
@@ -702,7 +703,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"furnace burn",i.getPriority());
@@ -714,7 +715,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"furnace smelt",i.getPriority());
@@ -726,7 +727,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"inventory click",i.getPriority());
@@ -738,7 +739,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"inventory close",i.getPriority());
@@ -750,7 +751,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"inventory open",i.getPriority());
@@ -762,7 +763,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"prepare item craft",i.getPriority());
@@ -775,7 +776,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"painting break by entity",i.getPriority());
@@ -787,7 +788,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"painting break",i.getPriority());
@@ -799,7 +800,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"painting place",i.getPriority());
@@ -812,7 +813,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player chat",i.getPriority());
@@ -824,7 +825,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player pre login",i.getPriority());
@@ -836,7 +837,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player animation",i.getPriority());
@@ -848,7 +849,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player bed enter",i.getPriority());
@@ -860,7 +861,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player bed leave",i.getPriority());
@@ -872,7 +873,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player bucket empty",i.getPriority());
@@ -884,7 +885,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player bucket fill",i.getPriority());
@@ -896,7 +897,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player change world",i.getPriority());
@@ -908,7 +909,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player command preprocess",i.getPriority());
@@ -920,7 +921,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player drop item",i.getPriority());
@@ -932,7 +933,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player egg throw",i.getPriority());
@@ -944,7 +945,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player exp change",i.getPriority());
@@ -956,7 +957,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player fish",i.getPriority());
@@ -968,7 +969,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player gamemode change",i.getPriority());
@@ -988,7 +989,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player interact",i.getPriority());
@@ -1000,7 +1001,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player item break",i.getPriority());
@@ -1012,7 +1013,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player item held",i.getPriority());
@@ -1024,7 +1025,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player join",i.getPriority());
@@ -1036,7 +1037,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player kick",i.getPriority());
@@ -1048,7 +1049,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player level change",i.getPriority());
@@ -1060,7 +1061,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player login",i.getPriority());
@@ -1072,7 +1073,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player move",i.getPriority());
@@ -1092,7 +1093,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player portal",i.getPriority());
@@ -1105,7 +1106,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player quit",i.getPriority());
@@ -1117,7 +1118,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player register channel",i.getPriority());
@@ -1129,7 +1130,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player respawn",i.getPriority());
@@ -1141,7 +1142,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player shear",i.getPriority());
@@ -1153,7 +1154,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player teleport",i.getPriority());
@@ -1165,7 +1166,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player toggle flight",i.getPriority());
@@ -1177,7 +1178,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player toggle sneak",i.getPriority());
@@ -1189,7 +1190,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player toggle sprint",i.getPriority());
@@ -1201,7 +1202,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player unregister channel",i.getPriority());
@@ -1213,7 +1214,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"player velocity",i.getPriority());
@@ -1226,7 +1227,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"map initialize",i.getPriority());
@@ -1238,7 +1239,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"plguin disable",i.getPriority());
@@ -1250,7 +1251,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"plugin enable",i.getPriority());
@@ -1262,7 +1263,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"remote server command",i.getPriority());
@@ -1274,7 +1275,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"server command",i.getPriority());
@@ -1286,7 +1287,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"server list ping",i.getPriority());
@@ -1298,7 +1299,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"service register",i.getPriority());
@@ -1310,7 +1311,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"service unregister",i.getPriority());
@@ -1323,7 +1324,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"vehicle block collision",i.getPriority());
@@ -1335,7 +1336,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"vehicle create",i.getPriority());
@@ -1347,7 +1348,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"vehicle damage",i.getPriority());
@@ -1359,7 +1360,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"vehicle destroy",i.getPriority());
@@ -1371,7 +1372,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"vehcile enter",i.getPriority());
@@ -1383,7 +1384,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"vehicle entity collision",i.getPriority());
@@ -1395,7 +1396,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"vehicle collision",i.getPriority());
@@ -1407,7 +1408,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"vehicle move",i.getPriority());
@@ -1419,7 +1420,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"vehcile update",i.getPriority());
@@ -1432,7 +1433,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"lightning strike",i.getPriority());
@@ -1444,7 +1445,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"thunder change",i.getPriority());
@@ -1456,7 +1457,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"weather change",i.getPriority());
@@ -1469,7 +1470,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"chunk load",i.getPriority());
@@ -1481,7 +1482,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"chunk populate",i.getPriority());
@@ -1493,7 +1494,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"chunk unload",i.getPriority());
@@ -1505,7 +1506,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"portal create",i.getPriority());
@@ -1517,7 +1518,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"spawn change",i.getPriority());
@@ -1529,7 +1530,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"structure grow",i.getPriority());
@@ -1541,7 +1542,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"world init",i.getPriority());
@@ -1553,7 +1554,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"world load",i.getPriority());
@@ -1565,7 +1566,7 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"world save",i.getPriority());
@@ -1577,24 +1578,23 @@ public class PluginLogger implements Listener{
 						continue;
 					}
 					if(!timer){
-						out.log("");
+						out.log(time);
 						timer =true;
 					}
 					log(i.getPlugin(),"world unload",i.getPriority());
 				}
 		if(timer){
-			out.log("");
+			out.log(time);
 		}
 	}
-	
 	@EventHandler
 	public void onEnable(PluginEnableEvent e){
-		
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		Plugin pl =e.getPlugin();
 		if(pl==plugin){
 			return;
 		}
-		out.log(pl.getName()+" "+plugin.translate("plugin.enable"));
+		out.log(time+pl.getName()+" "+plugin.translate("plugin.enable"));
 	}
 	@EventHandler
 	public void onDisable(PluginDisableEvent e){
@@ -1602,12 +1602,12 @@ public class PluginLogger implements Listener{
 			printed=true;
 			printListener();
 		}
-		
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		Plugin pl =e.getPlugin();
 		if(pl==plugin){
 			return;
 		}
-		out.log(pl.getName()+" "+plugin.translate("plugin.disable"));
+		out.log(time+pl.getName()+" "+plugin.translate("plugin.disable"));
 	}
 	public void log(Plugin i,String event,EventPriority p){
 		out.log(i.getName()+" "+plugin.translate("plugin.register.event")+" "+event+" "+plugin.translate("plugin.priority")+" "+p.name());

@@ -15,8 +15,9 @@ public class Translater {
 	public Translater(File f){
 		if(!f.exists()){
 			File dir = f.getParentFile();
-			if(!dir.exists())
+			if(!dir.exists()){
 				dir.mkdir();
+			}
 			try {
 				f.createNewFile();
 			} catch (IOException e) {
@@ -46,7 +47,7 @@ public class Translater {
 						"\nplayer.from.lvl= from lvl\nplayer.start.fly=is now flying\nplayer.stop.fly=stopped flying\nplayer.start.sprint=is now sprinting" +
 						"\nplayer.stop.sprint=stopped sprinting\nplayer.start.sneak=is now sneaking\nplayer.stop.sneak=stopped sneaking" +
 						"\nplugin.register.event=is registering Event\nplugin.priority=with priority\nplugin.enable=has been enabled" +
-						"\nplugin.disable=has been disabled\nplugin.explosion=An explosion has been created by a plugin");
+						"\nplugin.disable=has been disabled");
 				p.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();

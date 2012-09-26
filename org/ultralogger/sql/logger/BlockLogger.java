@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
-import org.ultralogger.MainLogger;
 import org.ultralogger.sql.SQL;
 
 public class BlockLogger implements Listener,Runnable{
@@ -22,7 +21,7 @@ public class BlockLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
     public void onBreak(BlockBreakEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode = e.getPlayer().getGameMode().getValue();
         Block i = e.getBlock();
 
@@ -56,7 +55,7 @@ public class BlockLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
     public void onPlace(BlockPlaceEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode = e.getPlayer().getGameMode().getValue();
         Block i = e.getBlock();
         manager.query("INSERT INTO `"+manager.getprefix()+"_block`(`time`, `id`, `event`, `x`, `y`, `z`, `entity_name`,op,gamemode) VALUES (NOW(), "+i.getTypeId()+", 'place' ," +

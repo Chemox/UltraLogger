@@ -10,7 +10,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.ultralogger.MainLogger;
 import org.ultralogger.sql.SQL;
 
 public class InventoryLogger implements Listener,Runnable{
@@ -27,7 +26,7 @@ public class InventoryLogger implements Listener,Runnable{
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onOpen(InventoryOpenEvent e){
 		String name = e.getPlayer().getName();
-		boolean op = MainLogger.isAdmin(e.getPlayer());
+		boolean op = e.getPlayer().isOp();
         int gamemode = e.getPlayer().getGameMode().getValue();
 		
 		HumanEntity i =e.getPlayer();
@@ -39,7 +38,7 @@ public class InventoryLogger implements Listener,Runnable{
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onClose(InventoryCloseEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode = e.getPlayer().getGameMode().getValue();
 		
 		HumanEntity i =e.getPlayer();

@@ -13,7 +13,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerFishEvent.State;
 import org.bukkit.inventory.ItemStack;
-import org.ultralogger.MainLogger;
 import org.ultralogger.sql.SQL;
 
 public class PlayerLogger implements Listener,Runnable{
@@ -29,7 +28,7 @@ public class PlayerLogger implements Listener,Runnable{
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onEnterBed(PlayerBedEnterEvent e){
 		String name = e.getPlayer().getName();
-		boolean op = MainLogger.isAdmin(e.getPlayer());
+		boolean op = e.getPlayer().isOp();
         int gamemode = e.getPlayer().getGameMode().getValue();
 		Block bed = e.getBed();
 
@@ -40,7 +39,7 @@ public class PlayerLogger implements Listener,Runnable{
 	public void onLeaveBed(PlayerBedLeaveEvent e){
 		if(e.getBed()==null||e.getPlayer()==null){return;}
 		String name = e.getPlayer().getName();
-		boolean op = MainLogger.isAdmin(e.getPlayer());
+		boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		Block bed = e.getBed();
 
@@ -50,7 +49,7 @@ public class PlayerLogger implements Listener,Runnable{
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onEmptyBucket(PlayerBucketEmptyEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		Block bed = e.getBlockClicked();
 
@@ -60,7 +59,7 @@ public class PlayerLogger implements Listener,Runnable{
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onFillBucket(PlayerBucketFillEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		Block bed = e.getBlockClicked();
 
@@ -70,7 +69,7 @@ public class PlayerLogger implements Listener,Runnable{
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onChangeWorld(PlayerChangedWorldEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 
         manager.query("INSERT INTO `" + manager.getprefix() + "_player`(`time`, `event`,`From/Cause/Amount/Message`,`To/NewAmount/Item`, `x`, `y`, `z`, `entity_name`, `op`, `gamemode`) VALUES (NOW(), " + "'player.change.world' ,'" +
@@ -79,7 +78,7 @@ public class PlayerLogger implements Listener,Runnable{
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onDropItem(PlayerDropItemEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		Item i =e.getItemDrop();
 
@@ -90,7 +89,7 @@ public class PlayerLogger implements Listener,Runnable{
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onThrowEgg(PlayerEggThrowEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 
         manager.query("INSERT INTO `"+manager.getprefix()+"_player`(`time`, `event`, `x`, `y`, `z`, `entity_name`, `op`,`gamemode`) VALUES (NOW(), "+"'player.throw.egg' ," +
@@ -99,7 +98,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onExpChange(PlayerExpChangeEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		int i =e.getAmount();
 
@@ -109,7 +108,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onFish(PlayerFishEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 
 		if(e.getState()==State.CAUGHT_ENTITY){
@@ -128,7 +127,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onChangeGameMode(PlayerGameModeChangeEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 
         manager.query("INSERT INTO `" + manager.getprefix() + "_player`(`time`, `event`,`From/Cause/Amount/Message`, `x`, `y`, `z`, `entity_name`, `op`, `gamemode`) VALUES (NOW(), "+"'player.change.gamemode' ,'" +
@@ -137,7 +136,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onInteractEntity(PlayerInteractEntityEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		Entity i = e.getRightClicked();
 
@@ -147,7 +146,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onInteract(PlayerInteractEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 
 		if(e.getAction()==Action.LEFT_CLICK_AIR||e.getAction()==Action.RIGHT_CLICK_AIR){
@@ -176,7 +175,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onBreakItem(PlayerItemBreakEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		ItemStack i =e.getBrokenItem();
 
@@ -186,7 +185,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent14(PlayerJoinEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 
         manager.query("INSERT INTO `"+manager.getprefix()+"_player`(`time`, `event`, `x`, `y`, `z`, `entity_name`, `op`,`gamemode`) VALUES (NOW(), "+"'player.connected' ," +
@@ -196,7 +195,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent15(PlayerPickupItemEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		Item i =e.getItem();
 
@@ -206,7 +205,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent16(PlayerPortalEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		Location i = e.getFrom();
 		Location f = e.getTo();
@@ -230,7 +229,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent18(PlayerQuitEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 
         manager.query("INSERT INTO `"+manager.getprefix()+"_player`(`time`, `event`, `x`, `y`, `z`, `entity_name`, `op`,`gamemode`) VALUES (NOW(), "+"'player.disconnect' ," +
@@ -239,7 +238,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent19(PlayerRespawnEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		Location i = e.getRespawnLocation();
 
@@ -249,7 +248,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent20(PlayerShearEntityEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		Entity i = e.getEntity();
 
@@ -259,7 +258,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent21(PlayerTeleportEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		Location i = e.getFrom();
 		Location f = e.getTo();
@@ -271,7 +270,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent22(PlayerToggleFlightEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		
 		if(e.isFlying()){
@@ -287,7 +286,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent23(PlayerToggleSprintEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		
 		if(e.isSprinting()){
@@ -302,7 +301,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent24(PlayerToggleSneakEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 		
 		if(e.isSneaking()){
@@ -326,7 +325,7 @@ public class PlayerLogger implements Listener,Runnable{
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent26(PlayerLevelChangeEvent e){
         String name = e.getPlayer().getName();
-        boolean op = MainLogger.isAdmin(e.getPlayer());
+        boolean op = e.getPlayer().isOp();
         int gamemode=e.getPlayer().getGameMode().getValue();
 
         manager.query("INSERT INTO `" + manager.getprefix() + "_player`(`time`, `event`, `From/Cause/Amount/Message`, `To/NewAmount/Item`, `x`, `y`, `z`, `entity_name`, `op`, `gamemode`) VALUES (NOW(), " + "'player.lvl' ,'" +

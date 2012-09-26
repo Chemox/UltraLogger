@@ -1,6 +1,7 @@
 package org.ultralogger.logger;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -31,7 +32,7 @@ public class EnchantmentLogger implements Listener{
 	
 	@EventHandler
 	public void onEnchant(EnchantItemEvent e){
-		
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		Player p =e.getEnchanter();
 		String enchants ="";
 		for(Iterator<Enchantment> i =e.getEnchantsToAdd().keySet().iterator();i.hasNext();){
@@ -39,7 +40,7 @@ public class EnchantmentLogger implements Listener{
 		}
 		enchants=enchants.substring(0, enchants.lastIndexOf(","));
 		int cost = e.getExpLevelCost();
-		out.log(p.getName()+" "+plugin.translate("enchant.item")+" "+e.getItem().toString()+" "+plugin.translate("for")+" "+cost+" xp(s) "+
+		out.log(time+p.getName()+" "+plugin.translate("enchant.item")+" "+e.getItem().toString()+" "+plugin.translate("for")+" "+cost+" xp(s) "+
 				plugin.translate("with")+" "+enchants);
 	}
 	public void disable(){

@@ -1,6 +1,7 @@
 package org.ultralogger.logger;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.util.Date;
 
 import org.bukkit.event.EventHandler;
@@ -29,17 +30,17 @@ public class ChatLogger implements Listener{
 	
 	@EventHandler (priority = EventPriority.HIGH)
 	public void onSpeak(AsyncPlayerChatEvent e){
-		
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		String name = e.getPlayer().getName();
-		if(MainLogger.isAdmin(e.getPlayer())){
+		if(e.getPlayer().isOp()){
 			name="[Admin] "+name;
 			}
 		name="("+e.getPlayer().getGameMode().name()+")"+name;
-		out.log(name+" --> "+e.getMessage());
+		out.log(time+name+" --> "+e.getMessage());
 	}
 	public void log(String msg){
-		
-		out.log(msg);
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
+		out.log(time+msg);
 	}
 	public void disable(){
 		out.close();

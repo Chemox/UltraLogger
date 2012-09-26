@@ -1,6 +1,7 @@
 package org.ultralogger.logger;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.util.Date;
 
 import org.bukkit.entity.Entity;
@@ -29,26 +30,29 @@ public class WeatherLogger implements Listener{
 	
 	@EventHandler
 	public void onStrike(LightningStrikeEvent e){
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		Entity i =e.getLightning();
-		out.log("["+e.getWorld().getName()+"] "+plugin.translate("strike")+MainLogger.transformToFlatLoc(i.getLocation()));
+		out.log(time+"["+e.getWorld().getName()+"] "+plugin.translate("strike")+" "+plugin.translate("in")+" ["+(int)i.getLocation().getX()+","+(int)i.getLocation().getY()+","+(int)i.getLocation().getZ()+"]");
 	}
 	@EventHandler
 	public void onThunder(ThunderChangeEvent e){
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		boolean i =e.toThunderState();
 		String thunder =""+plugin.translate("thunder.stop")+"";
 		if(i){
 			thunder=""+plugin.translate("thunder.start")+"";
 		}
-		out.log("["+e.getWorld().getName()+"] "+thunder);
+		out.log(time+"["+e.getWorld().getName()+"] "+thunder);
 	}
 	@EventHandler
 	public void onChange(WeatherChangeEvent e){
+		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		boolean i =e.toWeatherState();
 		String thunder =""+plugin.translate("rain.stop")+"";
 		if(i){
 			thunder=""+plugin.translate("rain.start")+"";
 		}
-		out.log("["+e.getWorld().getName()+"] "+thunder);
+		out.log(time+"["+e.getWorld().getName()+"] "+thunder);
 	}
 	public void disable(){
 		out.close();

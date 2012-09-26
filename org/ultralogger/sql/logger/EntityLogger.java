@@ -56,14 +56,9 @@ public class EntityLogger implements Listener,Runnable{
         manager.query("INSERT INTO `"+manager.getprefix()+"_entity`(`time`,`world`,`entityname`,`event`,`x`,`y`,`z`) VALUES (NOW(),'"+i.getWorld().getName()+"','"+i.toString()+"','Death',"+toSQLquery(i.getLocation())+")");
 	}
 	@EventHandler (priority = EventPriority.MONITOR)
-	public void onEntityExplode(EntityExplodeEvent e){
+	public void onEvent6(EntityExplodeEvent e){
 		Entity i =e.getEntity();
-		if(i==null){
-			manager.query("INSERT INTO `"+manager.getprefix()+"_entity`(`time`,`world`,`entityname`,`event`,`x`,`y`,`z`) VALUES (NOW(),'"+e.getLocation().getWorld().getName()+"','Unknown','Explode',"+toSQLquery(e.getLocation())+")");
-		}
-		else{	
-			manager.query("INSERT INTO `"+manager.getprefix()+"_entity`(`time`,`world`,`entityname`,`event`,`x`,`y`,`z`) VALUES (NOW(),'"+i.getWorld().getName()+"','"+i.toString()+"','Explode',"+toSQLquery(i.getLocation())+")");
-		}
+        manager.query("INSERT INTO `"+manager.getprefix()+"_entity`(`time`,`world`,`entityname`,`event`,`x`,`y`,`z`) VALUES (NOW(),'"+i.getWorld().getName()+"','"+i.toString()+"','Explode',"+toSQLquery(i.getLocation())+")");
 	}
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent7(EntityInteractEvent e){
