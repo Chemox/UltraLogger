@@ -58,7 +58,6 @@ public class RollbackCommandExecutor {
 		maxZ++;
 		int newY = minY;
 		int newZ = minZ;
-		System.out.println("minX["+minX+"]minY["+minY+"]minZ["+minZ+"] ----- maxX["+maxX+"]maxY["+maxY+"]maxZ["+maxZ+"]");
 		for(;minX!=maxX;minX++){
 			newY=minY;
 			newZ=minZ;
@@ -72,7 +71,7 @@ public class RollbackCommandExecutor {
 				}
 			}
 		}
-		p.sendMessage(ChatColor.GOLD+" Succesfully undo change(s) "+good+"/"+max+" times !");
+		p.sendMessage(ChatColor.GOLD+" Succesfully undo change(s) "+good+"/"+max+" time(s) !");
 	}
 	
 	/**Just exec the command
