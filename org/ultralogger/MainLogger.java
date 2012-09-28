@@ -377,6 +377,7 @@ public class MainLogger extends JavaPlugin{
 						if(C!='0'&&C!='1'&&C!='2'&&C!='3'&&C!='4'&&C!='5'&&C!='6'&&C!='7'&&C!='8'&&C!='9')
 							last=last.substring(0, last.length()-1);
 						log.info(pref+t.translate("last")+" "+last);
+						break;
 					}
 				}
 				in.close();
