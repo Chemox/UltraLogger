@@ -1,11 +1,14 @@
 package org.ultralogger;
 
 import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.ultralogger.logger.*;
 import org.ultralogger.more.HistoryManager;
+import org.ultralogger.more.RollbackCommandExecutor;
 import org.ultralogger.more.Translater;
 import org.ultralogger.sql.SQL;
 
@@ -68,6 +71,65 @@ public class MainLogger extends JavaPlugin{
 	private int block_hist_itemID =280;
 	private boolean block_history = false;
 	private HistoryManager hist_manager;
+	
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
+		if(cmd.getName().equalsIgnoreCase("/undo")&&args.length<3&&sender instanceof Player){ // If the player typed //undo then do the following...
+			Location loc =((Player) sender).getLocation();
+			loc.add(0, -2, 0);
+			RollbackCommandExecutor.undo((Player)(sender), loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/undo")&&args.length==3&&sender instanceof Player){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(((Player) sender).getLocation().getWorld(),x,y,z);
+			RollbackCommandExecutor.undo((Player)(sender), loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/undo")&&args.length==6&&sender instanceof Player){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(((Player) sender).getLocation().getWorld(),x,y,z);
+			int x1 = Integer.parseInt(args[3]);
+			int y1 = Integer.parseInt(args[4]);
+			int z1 = Integer.parseInt(args[5]);
+			Location loc1 = new Location(((Player) sender).getLocation().getWorld(),x1,y1,z1);
+			RollbackCommandExecutor.undo((Player)(sender), loc,loc1);
+			return true;
+		}
+		if(cmd.getName().equalsIgnoreCase("/redo")&&args.length<3&&sender instanceof Player){ // If the player typed //undo then do the following...
+			Location loc =((Player) sender).getLocation();
+			loc.add(0, -2, 0);
+			RollbackCommandExecutor.redo((Player)(sender), loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/redo")&&args.length==3&&sender instanceof Player){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(((Player) sender).getLocation().getWorld(),x,y,z);
+			RollbackCommandExecutor.redo((Player)(sender), loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/redo")&&args.length==6&&sender instanceof Player){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(((Player) sender).getLocation().getWorld(),x,y,z);
+			int x1 = Integer.parseInt(args[3]);
+			int y1 = Integer.parseInt(args[4]);
+			int z1 = Integer.parseInt(args[5]);
+			Location loc1 = new Location(((Player) sender).getLocation().getWorld(),x1,y1,z1);
+			RollbackCommandExecutor.redo((Player)(sender), loc,loc1);
+			return true;
+		}
+		//If this has happened the function will break and return true. if this hasn't happened the a value of false will be returned.
+		return false; 
+	}
 	
 	public void onDisable() {
 		disable();
@@ -404,6 +466,13 @@ public class MainLogger extends JavaPlugin{
 	 */
 	public static boolean canSeeHistory(Player p){
 		return p.hasPermission("ultralogger.history") || p.isOp();
+	}
+	
+	/**
+	 * Check if the specified player has the permission to undo or redo a block destroying or placement
+	 */
+	public static boolean canRollBack(Player p){
+		return p.hasPermission("ultralogger.rollback") || p.isOp();
 	}
 	
 	/**

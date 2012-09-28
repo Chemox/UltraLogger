@@ -176,7 +176,7 @@ public class LoggerFile {
 	public void log(String s){
 		String time = d.format(new Date(System.currentTimeMillis()))+" ";;
 		try {
-			out.append(time+s);
+			out.append(time+s+"\n\r");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

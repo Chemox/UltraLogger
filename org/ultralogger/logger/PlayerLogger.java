@@ -279,7 +279,6 @@ public class PlayerLogger implements Listener{
 	}
 	@EventHandler
 	public void onFly(PlayerToggleFlightEvent e){
-		
 		String name = e.getPlayer().getName();
 		if(MainLogger.isAdmin(e.getPlayer())){
 			name="[Admin] "+name;}name="("+e.getPlayer().getGameMode().name()+")"+name;
