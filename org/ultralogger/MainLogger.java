@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class MainLogger extends JavaPlugin{
 	public static MainLogger plugin;
 	private static final Logger log = Logger.getLogger("Minecraft");
-	public static final String pref = "[UltraLogger] v1.6.2 ";
+	public static final String pref = "[UltraLogger] v1.6.5 ";
 	
 	public Translater t;
 	public static final File lang = new File("./Log/lang.yml");
