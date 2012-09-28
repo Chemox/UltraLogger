@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.SpawnChangeEvent;
 import org.bukkit.event.world.StructureGrowEvent;
+import org.ultralogger.MainLogger;
 import org.ultralogger.sql.SQL;
 
 public class WorldLogger implements Listener,Runnable{
@@ -41,7 +42,7 @@ public class WorldLogger implements Listener,Runnable{
 
 		if(e.getPlayer()!=null){
 			name = e.getPlayer().getName();
-			op = e.getPlayer().isOp();
+			op = MainLogger.isAdmin(e.getPlayer());
 		    gamemode = e.getPlayer().getGameMode().getValue();
             manager.query("INSERT INTO `"+manager.getprefix()+"_world`(`time`, `world`, `event`,`species`,`x`,`y`, `z`, entity_name, op, gamemode) VALUES (NOW(),'"+e.getWorld().getName()+"', 'player.structure.grow."+bonemeal+"','" +
                     e.getSpecies().name()+"',"+toSQLquery(i)+",'"+name+"',"+ op +","+ gamemode +")");

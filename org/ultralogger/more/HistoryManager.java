@@ -12,6 +12,7 @@ import java.util.Iterator;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -27,6 +28,7 @@ import org.ultralogger.MainLogger;
 public class HistoryManager implements Listener{
 	
 	public static File history = new File("./Log/dont_modify_me");
+	public static HistoryManager instance;
 	
 	private MainLogger plugin;
 	
@@ -35,6 +37,7 @@ public class HistoryManager implements Listener{
 	private int count =0;
 	
 	public HistoryManager(MainLogger mainLogger,int id) {
+		instance=this;
 		plugin=mainLogger;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 		this.itemID=id;
@@ -56,7 +59,7 @@ public class HistoryManager implements Listener{
 	public void onBreak(BlockBreakEvent e){
 		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		String name = e.getPlayer().getName();
-		if(e.getPlayer().isOp()){
+		if(MainLogger.isAdmin(e.getPlayer())){
 			name="[Admin] "+name;
 		}
 		name="("+e.getPlayer().getGameMode().name()+")"+name;
@@ -84,7 +87,7 @@ public class HistoryManager implements Listener{
 	public void onPlace(BlockPlaceEvent e){
 		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
 		String name = e.getPlayer().getName();
-		if(e.getPlayer().isOp()){
+		if(MainLogger.isAdmin(e.getPlayer())){
 			name="[Admin] "+name;
 		}
 		name="("+e.getPlayer().getGameMode().name()+")"+name;
@@ -112,7 +115,7 @@ public class HistoryManager implements Listener{
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e){
 		Player p =e.getPlayer();
-		if(e.getAction()!=Action.RIGHT_CLICK_BLOCK||!e.hasItem()||!plugin.canSeeHistory(p)){ return;}
+		if(e.getAction()!=Action.RIGHT_CLICK_BLOCK||!e.hasItem()||!MainLogger.canSeeHistory(p)){ return;}
 		int id = e.getPlayer().getItemInHand().getTypeId();
 		if(id!=itemID){ return ;}
 		times++;
@@ -134,9 +137,10 @@ public class HistoryManager implements Listener{
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public int isHistoric(Location loc){
 		int x =0;
-		for(Iterator<History> i = historic.iterator();i.hasNext();){
+		for(Iterator<History> i = ((ArrayList<History>) historic.clone()).iterator();i.hasNext();){
 			History g = i.next();
 			if(equal(g.getLocation(),loc)){
 				return x;
@@ -144,6 +148,12 @@ public class HistoryManager implements Listener{
 			x++;
 		}
 		return -1;
+	}
+	
+	public History getHistory(Location loc){
+		if(isHistoric(loc)<=-1)
+			return null;
+		return historic.get(isHistoric(loc));
 	}
 
 	/**
@@ -170,13 +180,18 @@ public class HistoryManager implements Listener{
 	}
 	public void load() throws Exception{
 		BufferedReader r = new BufferedReader(new FileReader(history));
+		Server v = plugin.getServer();
 		String s=r.readLine();
 		while(s!=null){
-			History h =History.fromString(s, plugin.getServer());
+			History h =History.fromString(s, v);
 			if(h==null){ continue;}
 			historic.add(h);
 			s=r.readLine();
 		}
 		r.close();
+	}
+	
+	public static HistoryManager getInstance(){
+		return instance;
 	}
 }

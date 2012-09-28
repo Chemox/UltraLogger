@@ -18,7 +18,6 @@ public class SQL {
     private Connection conn;
     private MainLogger plugin;
     private String dbms = "mysql";
-    private EscapeString ES;
     private String serverName,portNumber,userName,password,dbName,prefix;
 
     /*
@@ -71,7 +70,7 @@ public class SQL {
         connectionProps.put("user", this.userName);
         connectionProps.put("password", this.password);
         conn = DriverManager.getConnection("jdbc:" + this.dbms + "://" + this.serverName + ":" + this.portNumber + "/",connectionProps);
-        log.info("Connected to database");
+        log.info(MainLogger.pref+"Connected to database");
         return conn;
     }
 
@@ -88,7 +87,7 @@ public class SQL {
             stmt.executeUpdate(query);
             stmt.close();
         } catch (SQLException e) {
-            System.out.println("[UltraLogger] (ERROR) Can NOT execute query : "+query);
+            System.out.println(MainLogger.pref+"(ERROR) Can NOT execute query : "+query);
             e.printStackTrace();
         }
     }

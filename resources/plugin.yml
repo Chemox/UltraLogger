@@ -4,8 +4,24 @@ author: _Justyce_
 manager : _Justyce_
 maintener : roelmb
 tester : roelmb
-version: 1.6.1
+version: 1.7
 description : The Ultimate logger, nothing can be done without be logged into one of the logs of this plugin. Better than Big Brother !
+commands:
+  /undo:
+      description: This command undo the last block placement/break at the specified or not location
+      usage: /<command> [x] [y] [z]
+      permission: <plugin name>.rollback
+      permission-message: You don't have <permission>
+  /redo:
+      description: This command restore the last block placement/break at the specified or not location
+      usage: /<command> [x] [y] [z]
+      permission: <plugin name>.rollback
+      permission-message: You don't have <permission>
+      
 permissions:
   ultralogger.history:
     description: Allow players to see the history of a location in game
+  ultralogger.admin:
+    description: The players with this permission will be shown with the admin prefix in the logs
+  ultralogger.rollback:
+    description: Allow players to rollback actions

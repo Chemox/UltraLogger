@@ -1,7 +1,6 @@
 package org.ultralogger.logger;
 
 import java.io.File;
-import java.text.DateFormat;
 import java.util.Date;
 
 import org.bukkit.entity.HumanEntity;
@@ -32,24 +31,24 @@ public class InventoryLogger implements Listener{
 	
 	@EventHandler
 	public void onOpen(InventoryOpenEvent e){
-		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
+		
 		String name = e.getPlayer().getName();
-		if(e.getPlayer().isOp()){
+		if(MainLogger.isAdmin(e.getPlayer())){
 			name="[Admin] "+name;}name="("+e.getPlayer().getGameMode().name()+")"+name;
 		
 		HumanEntity i =e.getPlayer();
-		out.log(time+name+" "+plugin.translate("inventory.open")+" "+e.getView().getTitle()+" ("+e.getView().getType().name()+") "+plugin.translate("in")+" ["+
+		out.log(name+" "+plugin.translate("inventory.open")+" "+e.getView().getTitle()+" ("+e.getView().getType().name()+") "+plugin.translate("in")+" ["+
 				(int)i.getLocation().getX()+","+(int)i.getLocation().getY()+","+(int)i.getLocation().getZ()+"]");
 	}
 	@EventHandler
 	public void onClose(InventoryCloseEvent e){
-		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
+		
 		String name = e.getPlayer().getName();
-		if(e.getPlayer().isOp()){
+		if(MainLogger.isAdmin(e.getPlayer())){
 			name="[Admin] "+name;}name="("+e.getPlayer().getGameMode().name()+")"+name;
 		
 		HumanEntity i =e.getPlayer();
-		out.log(time+name+" "+plugin.translate("inventory.close")+" "+e.getView().getTitle()+" ("+e.getView().getType().name()+") "+plugin.translate("in")+" ["+
+		out.log(name+" "+plugin.translate("inventory.close")+" "+e.getView().getTitle()+" ("+e.getView().getType().name()+") "+plugin.translate("in")+" ["+
 				(int)i.getLocation().getX()+","+(int)i.getLocation().getY()+","+(int)i.getLocation().getZ()+"]");
 	}
 	private ItemStack last = null;
@@ -57,7 +56,7 @@ public class InventoryLogger implements Listener{
 	private int amount = -1;
 	@EventHandler
 	public void onClick(InventoryClickEvent e){
-		String time = DateFormat.getInstance().format(new Date(System.currentTimeMillis()))+" ";
+		
 		String name = e.getWhoClicked().getName();
 		if(e.getWhoClicked().isOp()){
 			name="[Admin] "+name;}name="("+e.getWhoClicked().getGameMode().name()+")"+name;
@@ -70,12 +69,12 @@ public class InventoryLogger implements Listener{
 		if(last!=null&&lastI!=null&&e.getView().getTopInventory().getType()==lastI.getType()&&item.getTypeId()==0){
 			last.setAmount(amount);
 			if(in){
-				out.log(time+name+" "+plugin.translate("inventory.put")+" "+last.toString()+" "+plugin.translate("from")+" "+lastI.getType().name()+
+				out.log(name+" "+plugin.translate("inventory.put")+" "+last.toString()+" "+plugin.translate("from")+" "+lastI.getType().name()+
 						" "+plugin.translate("inventory.to")+"" +
 						" "+plugin.translate("in")+" ["+(int)i.getLocation().getX()+","+(int)i.getLocation().getY()+","+(int)i.getLocation().getZ()+"]");
 			}
 			else{
-				out.log(time+name+" "+plugin.translate("inventory.put")+" "+last.toString()+" "+plugin.translate("inventory.from")+" "+e.getView().getType().name()+
+				out.log(name+" "+plugin.translate("inventory.put")+" "+last.toString()+" "+plugin.translate("inventory.from")+" "+e.getView().getType().name()+
 						" "+plugin.translate("in")+" ["+(int)i.getLocation().getX()+","+(int)i.getLocation().getY()+","+(int)i.getLocation().getZ()+"]");
 			}
 			last=e.getCurrentItem();
@@ -86,7 +85,7 @@ public class InventoryLogger implements Listener{
 			last=item;
 			amount=item.getAmount();
 			lastI=e.getView().getTopInventory();
-			out.log(time+name+" "+plugin.translate("inventory.click")+" "+item.toString()+" "+plugin.translate("from")+" "+e.getView().getTitle()+
+			out.log(name+" "+plugin.translate("inventory.click")+" "+item.toString()+" "+plugin.translate("from")+" "+e.getView().getTitle()+
 					" "+plugin.translate("in")+" ["+(int)i.getLocation().getX()+","+(int)i.getLocation().getY()+","+(int)i.getLocation().getZ()+"]");
 		}
 		

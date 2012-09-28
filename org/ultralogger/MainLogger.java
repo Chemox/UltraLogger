@@ -1,9 +1,14 @@
 package org.ultralogger;
 
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.ultralogger.logger.*;
 import org.ultralogger.more.HistoryManager;
+import org.ultralogger.more.RollbackCommandExecutor;
 import org.ultralogger.more.Translater;
 import org.ultralogger.sql.SQL;
 
@@ -18,12 +23,12 @@ import java.util.logging.Logger;
 public class MainLogger extends JavaPlugin{
 	public static MainLogger plugin;
 	private static final Logger log = Logger.getLogger("Minecraft");
-	private String pref = "[UltraLogger] v1.6 ";
+	public static final String pref = "[UltraLogger] v1.6.2 ";
 	
 	public Translater t;
-	public static File lang = new File("./Log/lang.yml");
+	public static final File lang = new File("./Log/lang.yml");
 
-	public static File config= new File("./Log/config.yml");
+	public static final File config= new File("./Log/config.yml");
     private boolean UpdateCheck=true;
 	private boolean player =true;
     private boolean chat=true;
@@ -46,8 +51,8 @@ public class MainLogger extends JavaPlugin{
     private String sql_table_prefix ="UL(v1.6)";
 	
 	private boolean append = true;
-	private int lines = 1000;
-	private EnumPeriod period = EnumPeriod.NEVER;
+	private int lines = 0;
+	private EnumPeriod period = EnumPeriod.DAY;
 	private Date date ;
 	
 	private PlayerLogger playerL;
@@ -67,17 +72,67 @@ public class MainLogger extends JavaPlugin{
 	private boolean block_history = false;
 	private HistoryManager hist_manager;
 	
-	/**Check if the specified player has the permission to see a block history
-	 * 
-	 */
-	public boolean canSeeHistory(Player p){
-		return p.hasPermission("ultralogger.history") || p.isOp();
-	}
 	
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
+		if(cmd.getName().equalsIgnoreCase("/undo")&&args.length<3&&sender instanceof Player){ // If the player typed //undo then do the following...
+			Location loc =((Player) sender).getLocation();
+			loc.add(0, -2, 0);
+			RollbackCommandExecutor.undo((Player)(sender), loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/undo")&&args.length==3&&sender instanceof Player){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(((Player) sender).getLocation().getWorld(),x,y,z);
+			RollbackCommandExecutor.undo((Player)(sender), loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/undo")&&args.length==6&&sender instanceof Player){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(((Player) sender).getLocation().getWorld(),x,y,z);
+			int x1 = Integer.parseInt(args[3]);
+			int y1 = Integer.parseInt(args[4]);
+			int z1 = Integer.parseInt(args[5]);
+			Location loc1 = new Location(((Player) sender).getLocation().getWorld(),x1,y1,z1);
+			RollbackCommandExecutor.undo((Player)(sender), loc,loc1);
+			return true;
+		}
+		if(cmd.getName().equalsIgnoreCase("/redo")&&args.length<3&&sender instanceof Player){ // If the player typed //undo then do the following...
+			Location loc =((Player) sender).getLocation();
+			loc.add(0, -2, 0);
+			RollbackCommandExecutor.redo((Player)(sender), loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/redo")&&args.length==3&&sender instanceof Player){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(((Player) sender).getLocation().getWorld(),x,y,z);
+			RollbackCommandExecutor.redo((Player)(sender), loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/redo")&&args.length==6&&sender instanceof Player){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(((Player) sender).getLocation().getWorld(),x,y,z);
+			int x1 = Integer.parseInt(args[3]);
+			int y1 = Integer.parseInt(args[4]);
+			int z1 = Integer.parseInt(args[5]);
+			Location loc1 = new Location(((Player) sender).getLocation().getWorld(),x1,y1,z1);
+			RollbackCommandExecutor.redo((Player)(sender), loc,loc1);
+			return true;
+		}
+		//If this has happened the function will break and return true. if this hasn't happened the a value of false will be returned.
+		return false; 
+	}
 	
 	public void onDisable() {
 		disable();
-		saveConfiguration(false);
 		log.info(pref+"has been disabled");
 	}
 
@@ -88,7 +143,7 @@ public class MainLogger extends JavaPlugin{
 		t=new Translater(lang);
 		loadConfig();
         if(UpdateCheck){
-		checkUpdates();
+        	checkUpdates();
         }
 		if(period!=EnumPeriod.NEVER){
 			int days = Calendar.WEEK_OF_MONTH*7;
@@ -144,86 +199,60 @@ public class MainLogger extends JavaPlugin{
 	public void enableFileLoggers(boolean yes){
 		if(yes){
 			date = new Date(System.currentTimeMillis());
-			if(chat){
+			saveConfiguration();
+			if(chat)
 				chatL =new ChatLogger(this,append,lines,true);
-			}
-			if(command){
+			if(command)
 				commandL = new CommandLogger(this,append,lines,true);
-			}
-			if(player){
+			if(player)
 				playerL = new PlayerLogger(this,append,lines,true);
-			}
-			if(vehicle){
+			if(vehicle)
 				vehicleL = new VehicleLogger(this,append,lines,true);
-			}
-			if(craft){
+			if(craft)
 				craftL = new CraftLogger(this,append,lines,true);
-			}
-			if(enchantment){
+			if(enchantment)
 				enchantmentL = new EnchantmentLogger(this,append,lines,true);
-			}
-			if(block){
+			if(block)
 				blockL=new BlockLogger(this,append,lines,true);
-			}
-			if(weather){
+			if(weather)
 				weatherL = new WeatherLogger(this,append,lines,true);
-			}
-			if(world){
+			if(world)
 				worldL = new WorldLogger(this,append,lines,true);
-			}
-			if(entity){
+			if(entity)
 				entityL = new EntityLogger(this,append,lines,true);
-			}
-			if(plugins){
+			if(plugins)
 				pluginL = new PluginLogger(this,append,lines,true);
-			}
-			if(inventory){
+			if(inventory)
 				inventoryL = new InventoryLogger(this,append,lines,true);
-			}
 		}
 		else{
-			if(chat){
+			if(chat)
 				chatL =new ChatLogger(this,append,lines,date);
-			}
-			if(command){
+			if(command)
 				commandL = new CommandLogger(this,append,lines,date);
-			}
-			if(player){
+			if(player)
 				playerL = new PlayerLogger(this,append,lines,date);
-			}
-			if(vehicle){
+			if(vehicle)
 				vehicleL = new VehicleLogger(this,append,lines,date);
-			}
-			if(craft){
+			if(craft)
 				craftL = new CraftLogger(this,append,lines,date);
-			}
-			if(enchantment){
+			if(enchantment)
 				enchantmentL = new EnchantmentLogger(this,append,lines,date);
-			}
-			if(block){
+			if(block)
 				blockL=new BlockLogger(this,append,lines,date);
-			}
-			if(weather){
+			if(weather)
 				weatherL = new WeatherLogger(this,append,lines,date);
-			}
-			if(world){
+			if(world)
 				worldL = new WorldLogger(this,append,lines,date);
-			}
-			if(entity){
+			if(entity)
 				entityL = new EntityLogger(this,append,lines,date);
-			}
-			if(plugins){
+			if(plugins)
 				pluginL = new PluginLogger(this,append,lines,date);
-			}
-			if(inventory){
+			if(inventory)
 				inventoryL = new InventoryLogger(this,append,lines,date);
-			}
-			date = new Date(System.currentTimeMillis());
-			saveConfiguration(false);
 		}
-		if(block_history){
+		if(block_history)
 			hist_manager =new HistoryManager(this, block_hist_itemID);
-		}
 	}
 	
 	/**
@@ -242,7 +271,8 @@ public class MainLogger extends JavaPlugin{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			saveConfiguration(true);
+			date = new Date(0);
+			saveConfiguration();
 		}
 		Properties prop = new Properties();
 		try {
@@ -266,8 +296,8 @@ public class MainLogger extends JavaPlugin{
 		weather=Boolean.parseBoolean(prop.getProperty("Weather-logger","true"));
 		inventory=Boolean.parseBoolean(prop.getProperty("Inventory-logger","true"));
 		append=Boolean.parseBoolean(prop.getProperty("Append","true"));
-		lines=Integer.parseInt( prop.getProperty("Max-Lines","1000"));
-		period = EnumPeriod.fromString(prop.getProperty("NewFileEvery","NEVER"));
+		lines=Integer.parseInt( prop.getProperty("Max-Lines","0"));
+		period = EnumPeriod.fromString(prop.getProperty("NewFileEvery","DAY"));
 		date = new Date(Long.parseLong(prop.getProperty("LastDELtime","0")));
 		sql_ip=prop.getProperty("SQL-host", "blank");
         sql_port=prop.getProperty("SQL-port","3306");
@@ -279,15 +309,14 @@ public class MainLogger extends JavaPlugin{
 		block_hist_itemID = Integer.parseInt(prop.getProperty("ItemID-toSee", "280"));
 		prop.clear();
 		prop=null;
-		saveConfiguration(false);
+		saveConfiguration();
 	}
 
 
 	/**Save the configuration
 	 * 
-	 * @param firstTime
 	 */
-	public void saveConfiguration(boolean firstTime) {
+	public void saveConfiguration() {
 		try {
 			PrintWriter out =new PrintWriter(config);
             out.println("Check for updates="+UpdateCheck);
@@ -315,7 +344,7 @@ public class MainLogger extends JavaPlugin{
 	        out.println("SQL-database="+sql_db);
 	        out.println("SQL-table-prefix="+sql_table_prefix);
 			out.println("#Do NOT modify anything under this line.");
-			if(firstTime){
+			if(date.compareTo(new Date(0))==0){
 				date =new Date(0);
 				out.println("LastDELtime="+0);
 			}
@@ -327,25 +356,6 @@ public class MainLogger extends JavaPlugin{
 			e.printStackTrace();
 		}
 		
-	}
-	
-	/**Check if the specified url exists and can be reached
-	 * 
-	 * @param url the url to check
-	 * @return if the url exists
-	 */
-	public static boolean urlExists(String url) {
-		try {
-			URL site = new URL(url);
-			try {
-				site.openStream();
-				return true;
-			} catch (IOException ex) {
-				return false;
-			}
-		} catch (MalformedURLException ex) {
-			return false;
-		}
 	}
 	
 	/**
@@ -364,9 +374,8 @@ public class MainLogger extends JavaPlugin{
 						String last =inputLine.substring(inputLine.indexOf("Lastest build :")+27,
 								inputLine.indexOf("1")+7).trim();
 						char C =last.charAt(last.length()-1);
-						if(C!='0'&&C!='1'&&C!='2'&&C!='3'&&C!='4'&&C!='5'&&C!='6'&&C!='7'&&C!='8'&&C!='9'){
+						if(C!='0'&&C!='1'&&C!='2'&&C!='3'&&C!='4'&&C!='5'&&C!='6'&&C!='7'&&C!='8'&&C!='9')
 							last=last.substring(0, last.length()-1);
-						}
 						log.info(pref+t.translate("last")+" "+last);
 					}
 				}
@@ -385,7 +394,7 @@ public class MainLogger extends JavaPlugin{
 			}
 		}
 	}
-	/**Use the translate tthe specified key
+	/**Use to translate the specified key
 	 * 
 	 * @param key
 	 * @return
@@ -429,6 +438,55 @@ public class MainLogger extends JavaPlugin{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	//STATIC METHODS
+	
+	/**Check if the specified url exists and can be reached
+	 * 
+	 * @param url the url to check
+	 * @return if the url exists
+	 */
+	public static boolean urlExists(String url) {
+		try {
+			URL site = new URL(url);
+			try {
+				site.openStream();
+				return true;
+			} catch (IOException ex) {
+				return false;
+			}
+		} catch (MalformedURLException ex) {
+			return false;
+		}
+	}
+	
+	/**Check if the specified player has the permission to see a block history
+	 * 
+	 */
+	public static boolean canSeeHistory(Player p){
+		return p.hasPermission("ultralogger.history") || p.isOp();
+	}
+	
+	/**
+	 * Check if the specified player has the permission to undo or redo a block destroying or placement
+	 */
+	public static boolean canRollBack(Player p){
+		return p.hasPermission("ultralogger.rollback") || p.isOp();
+	}
+	
+	/**
+	 * Check if the specified player has the [Admin] prefix
+	 */
+	public static boolean isAdmin(HumanEntity p){
+		return p.hasPermission("ultralogger.admin") || p.isOp();
+	}
+	
+	/**
+	 * Transform a location into flat files location log
+	 */
+	public static String transformToFlatLoc(Location loc){
+		return " "+plugin.translate("in")+" ["+(int)loc.getX()+","+(int)loc.getY()+","+(int)loc.getZ()+"]";
 	}
 	
 	

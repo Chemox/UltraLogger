@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.ultralogger.MainLogger;
 import org.ultralogger.sql.SQL;
 
 public class ChatLogger implements Listener,Runnable{
@@ -19,7 +20,7 @@ public class ChatLogger implements Listener,Runnable{
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onSpeak(AsyncPlayerChatEvent e){
 		String name = e.getPlayer().getName();
-        boolean op = e.getPlayer().isOp();
+        boolean op = MainLogger.isAdmin(e.getPlayer());
         String message = manager.StringCheck(e.getMessage());
 
 		manager.query("INSERT INTO `"+manager.getprefix()+"_chat`(`time`,`op`,`playername`,`text`) VALUES (NOW(),"+ op +",'"+name+"', '"+message+"')");
