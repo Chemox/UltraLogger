@@ -169,31 +169,42 @@ public class LoggerFile {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private int count =0;
 	public static DateFormat d = DateFormat.getInstance();
+	private ArrayList<String> msgs = new ArrayList<String>();
 	
 	public void log(String s){
-		String time = d.format(new Date(System.currentTimeMillis()))+" ";;
-		try {
-			out.append(time+s+"\n\r");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String time = d.format(new Date(System.currentTimeMillis()))+" ";
+		msgs.add(time+s);
 		count++;
-		if(count==10){
+		if(count==20){
 			count=0;
-			try {
-				out.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
+			for(Iterator<String> i = msgs.iterator();i.hasNext();){
+				String r = i.next();
+				try {
+					out.write(r);
+					out.newLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+			msgs.clear();
 		}
 	}
 
 	public void close() {
 		try {
-			out.flush();
+			for(Iterator<String> i = msgs.iterator();i.hasNext();){
+				String r = i.next();
+				try {
+					out.write(r);
+					out.newLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			msgs.clear();
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
