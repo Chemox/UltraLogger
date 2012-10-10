@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class MainLogger extends JavaPlugin{
 	public static MainLogger plugin;
 	private static final Logger log = Logger.getLogger("Minecraft");
-	public static final String pref = "[UltraLogger] v1.6.2 ";
+	public static final String pref = "[UltraLogger] v1.6.5 ";
 	
 	public Translater t;
 	public static final File lang = new File("./Log/lang.yml");
@@ -377,6 +377,7 @@ public class MainLogger extends JavaPlugin{
 						if(C!='0'&&C!='1'&&C!='2'&&C!='3'&&C!='4'&&C!='5'&&C!='6'&&C!='7'&&C!='8'&&C!='9')
 							last=last.substring(0, last.length()-1);
 						log.info(pref+t.translate("last")+" "+last);
+						break;
 					}
 				}
 				in.close();
@@ -486,7 +487,7 @@ public class MainLogger extends JavaPlugin{
 	 * Transform a location into flat files location log
 	 */
 	public static String transformToFlatLoc(Location loc){
-		return " "+plugin.translate("in")+" ["+(int)loc.getX()+","+(int)loc.getY()+","+(int)loc.getZ()+"]";
+		return " "+plugin.translate("in")+" ("+loc.getWorld().getName()+")["+(int)loc.getX()+","+(int)loc.getY()+","+(int)loc.getZ()+"]";
 	}
 	
 	

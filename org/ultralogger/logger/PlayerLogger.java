@@ -150,8 +150,9 @@ public class PlayerLogger implements Listener{
 		
 		String name = e.getPlayer().getName();
 		if(MainLogger.isAdmin(e.getPlayer())){
-			name="[Admin] "+name;}name="("+e.getPlayer().getGameMode().name()+")"+name;
-		
+			name="[Admin] "+name;
+		}
+		name="("+e.getPlayer().getGameMode().name()+")"+name;
 		Entity i = e.getRightClicked();
 		out.log(name+" "+plugin.translate("entity.interact")+" "+i.toString()+MainLogger.transformToFlatLoc(i.getLocation()));
 	}

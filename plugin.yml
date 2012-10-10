@@ -9,12 +9,12 @@ description : The Ultimate logger, nothing can be done without be logged into on
 commands:
   /undo:
       description: This command undo the last block placement/break at the specified or not location
-      usage: /<command> [x] [y] [z] [x] [y] [z] 
+      usage: /<command> [x] [y] [z] [x] [y] [z]
       permission: <plugin name>.rollback
       permission-message: You don't have <permission>
   /redo:
       description: This command restore the last block placement/break at the specified or not location
-      usage: /<command> [x] [y] [z] [x] [y] [z] 
+      usage: /<command> [x] [y] [z] [x] [y] [z]
       permission: <plugin name>.rollback
       permission-message: You don't have <permission>
       
