@@ -10,7 +10,6 @@ import org.bukkit.event.block.*;
 import org.bukkit.event.enchantment.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.*;
-import org.bukkit.event.painting.*;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.*;
 import org.bukkit.event.vehicle.*;
@@ -767,43 +766,6 @@ public class PluginLogger implements Listener{
 					}
 					log(i.getPlugin(),"prepare item craft",i.getPriority());
 				}
-				//PAINTING EVENTS
-				listeners =PaintingBreakByEntityEvent.getHandlerList().getRegisteredListeners();
-				for(int x=0;x<listeners.length;x++){
-					RegisteredListener i = listeners[x];
-					if(i.getPlugin()==plugin){
-						continue;
-					}
-					if(!timer){
-						out.log("");
-						timer =true;
-					}
-					log(i.getPlugin(),"painting break by entity",i.getPriority());
-				}
-				listeners =PaintingBreakEvent.getHandlerList().getRegisteredListeners();
-				for(int x=0;x<listeners.length;x++){
-					RegisteredListener i = listeners[x];
-					if(i.getPlugin()==plugin){
-						continue;
-					}
-					if(!timer){
-						out.log("");
-						timer =true;
-					}
-					log(i.getPlugin(),"painting break",i.getPriority());
-				}
-				listeners =PaintingPlaceEvent.getHandlerList().getRegisteredListeners();
-				for(int x=0;x<listeners.length;x++){
-					RegisteredListener i = listeners[x];
-					if(i.getPlugin()==plugin){
-						continue;
-					}
-					if(!timer){
-						out.log("");
-						timer =true;
-					}
-					log(i.getPlugin(),"painting place",i.getPriority());
-				}
 				//PLAYER EVENTS
 				listeners =AsyncPlayerChatEvent.getHandlerList().getRegisteredListeners();
 				for(int x=0;x<listeners.length;x++){
@@ -1097,7 +1059,6 @@ public class PluginLogger implements Listener{
 					}
 					log(i.getPlugin(),"player portal",i.getPriority());
 				}
-				listeners =PlayerPreLoginEvent.getHandlerList().getRegisteredListeners();
 				listeners =PlayerQuitEvent.getHandlerList().getRegisteredListeners();
 				for(int x=0;x<listeners.length;x++){
 					RegisteredListener i = listeners[x];

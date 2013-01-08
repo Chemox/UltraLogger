@@ -4,13 +4,9 @@ import java.io.File;
 import java.util.Date;
 
 import org.bukkit.block.Block;
-import org.bukkit.entity.Painting;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
-import org.bukkit.event.painting.PaintingBreakByEntityEvent;
-import org.bukkit.event.painting.PaintingPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.ultralogger.LoggerFile;
 import org.ultralogger.MainLogger;
@@ -81,31 +77,6 @@ public class BlockLogger implements Listener{
 		Block i = e.getBlock();
 		out.log(name+" "+plugin.translate("block.place")+" "+new ItemStack(i.getTypeId()).toString()+" "+plugin.translate("in")+" ["+(int)i.getLocation().getX()+","+
 		(int)i.getLocation().getY()+","+(int)i.getLocation().getZ()+"]");
-	}
-	@EventHandler
-	public void onPaintPlace(PaintingPlaceEvent e){
-		
-		String name = e.getPlayer().getName();
-		if(MainLogger.isAdmin(e.getPlayer())){
-			name="[Admin] "+name;}name="("+e.getPlayer().getGameMode().name()+")"+name;
-		
-		Block i = e.getBlock();
-		out.log(name+" "+plugin.translate("paint.place")+" "+plugin.translate("in")+" ["+(int)i.getLocation().getX()+","+(int)i.getLocation().getY()+
-				","+(int)i.getLocation().getZ()+"]");
-	}
-	@EventHandler
-	public void onPaintDestroy(PaintingBreakByEntityEvent e){
-		
-		String name = e.getRemover().toString();
-		if(e.getRemover() instanceof Player){
-			name = ((Player) e.getRemover()).getName();
-			if(((Player) e.getRemover()).isOp()){
-				name="[Admin] "+name;}name="("+((Player) e.getRemover()).getGameMode().name()+")"+name;
-			
-		}
-		Painting i = e.getPainting();
-		out.log(name+" "+plugin.translate("paint.break")+" "+plugin.translate("in")+" ["+(int)i.getLocation().getX()+","+(int)i.getLocation().getY()+
-				","+(int)i.getLocation().getZ()+"]");
 	}
 	public void disable(){
 		out.close();

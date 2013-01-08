@@ -229,10 +229,10 @@ public class PlayerLogger implements Listener{
 		
 		String name = e.getName()+" ("+e.getAddress().getHostAddress()+")";
 		if(e.getKickMessage()!=null&&e.getKickMessage()!=""){
-			out.log(name+" "+plugin.translate("was")+" "+e.getResult().name()+" "+plugin.translate("cause")+" : "+e.getKickMessage());
+			out.log(name+" "+plugin.translate("was")+" "+e.getLoginResult().name()+" "+plugin.translate("cause")+" : "+e.getKickMessage());
 		}
 		else{
-			out.log(name+" "+plugin.translate("was")+" "+e.getResult().name());
+			out.log(name+" "+plugin.translate("was")+" "+e.getLoginResult().name());
 		}
 	}
 	@EventHandler

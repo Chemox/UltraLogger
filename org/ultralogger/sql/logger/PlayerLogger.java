@@ -212,18 +212,18 @@ public class PlayerLogger implements Listener,Runnable{
 		Location f = e.getTo();
 
         manager.query("INSERT INTO `"+manager.getprefix()+"_player`(`time`, `event`,`From/Cause/Amount/Message`, `x`, `y`, `z`, `x2`, `y2`, `z2`,`entity_name`, `op`, `gamemode`) VALUES (NOW(), "+"'player.teleport' ,'" +
-                e.getCause().name()+"',"+toSQLquery(i)+toSQLquery(f)+",'"+name+"',"+ op + "," + gamemode +")");
+                e.getCause().name()+"',"+toSQLquery(i)+","+toSQLquery(f)+",'"+name+"',"+ op + "," + gamemode +")");
     }
     @EventHandler (priority = EventPriority.MONITOR)
 	public void onEvent17(AsyncPlayerPreLoginEvent e){
 		String name = e.getName()+" ("+e.getAddress().getHostAddress()+")";
 		if(e.getKickMessage()!=null&&e.getKickMessage()!=""){
 
-            manager.query("INSERT INTO `"+manager.getprefix()+"_player`(`time`, `event`,`From/Cause/Amount/Message`, `entity_name`) VALUES (NOW(), "+"'"+e.getResult().name()+"' ,'" +
+            manager.query("INSERT INTO `"+manager.getprefix()+"_player`(`time`, `event`,`From/Cause/Amount/Message`, `entity_name`) VALUES (NOW(), "+"'"+e.getLoginResult().name()+"' ,'" +
                     manager.StringCheck(e.getKickMessage())+"','"+name+"'"+")");
 		}
 		else{
-            manager.query("INSERT INTO `"+manager.getprefix()+"_player`(`time`, `event`, `entity_name`) VALUES (NOW(), "+"'"+e.getResult().name()+"' ,'" +
+            manager.query("INSERT INTO `"+manager.getprefix()+"_player`(`time`, `event`, `entity_name`) VALUES (NOW(), "+"'"+e.getLoginResult().name()+"' ,'" +
                     name+"')");
 		}
 	}

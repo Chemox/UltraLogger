@@ -12,6 +12,8 @@ import org.ultralogger.more.RollbackCommandExecutor;
 import org.ultralogger.more.Translater;
 import org.ultralogger.sql.SQL;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,10 +22,12 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import javax.swing.Timer;
+
 public class MainLogger extends JavaPlugin{
 	public static MainLogger plugin;
 	private static final Logger log = Logger.getLogger("Minecraft");
-	public static final String pref = "[UltraLogger] v1.6.5 ";
+	public static final String pref = "[UltraLogger] v1.6.9 ";
 	
 	public Translater t;
 	public static final File lang = new File("./Log/lang.yml");
@@ -71,17 +75,20 @@ public class MainLogger extends JavaPlugin{
 	private int block_hist_itemID =280;
 	private boolean block_history = false;
 	private HistoryManager hist_manager;
-	
+	/**
+	 * A timer that will check every 10 min if it's a new day or not
+	 */
+	private Timer dayChecker;
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-		if(cmd.getName().equalsIgnoreCase("/undo")&&args.length<3&&sender instanceof Player){ // If the player typed //undo then do the following...
+		if(cmd.getName().equalsIgnoreCase("/ulundo")&&args.length<3&&sender instanceof Player){ // If the player typed //undo then do the following...
 			Location loc =((Player) sender).getLocation();
 			loc.add(0, -2, 0);
 			RollbackCommandExecutor.undo((Player)(sender), loc);
 			return true;
 		}
-		else if(cmd.getName().equalsIgnoreCase("/undo")&&args.length==3&&sender instanceof Player){
+		else if(cmd.getName().equalsIgnoreCase("/ulundo")&&args.length==3&&sender instanceof Player){
 			int x = Integer.parseInt(args[0]);
 			int y = Integer.parseInt(args[1]);
 			int z = Integer.parseInt(args[2]);
@@ -89,7 +96,7 @@ public class MainLogger extends JavaPlugin{
 			RollbackCommandExecutor.undo((Player)(sender), loc);
 			return true;
 		}
-		else if(cmd.getName().equalsIgnoreCase("/undo")&&args.length==6&&sender instanceof Player){
+		else if(cmd.getName().equalsIgnoreCase("/ulundo")&&args.length==6&&sender instanceof Player){
 			int x = Integer.parseInt(args[0]);
 			int y = Integer.parseInt(args[1]);
 			int z = Integer.parseInt(args[2]);
@@ -101,13 +108,13 @@ public class MainLogger extends JavaPlugin{
 			RollbackCommandExecutor.undo((Player)(sender), loc,loc1);
 			return true;
 		}
-		if(cmd.getName().equalsIgnoreCase("/redo")&&args.length<3&&sender instanceof Player){ // If the player typed //undo then do the following...
+		if(cmd.getName().equalsIgnoreCase("/ulredo")&&args.length<3&&sender instanceof Player){ // If the player typed //undo then do the following...
 			Location loc =((Player) sender).getLocation();
 			loc.add(0, -2, 0);
 			RollbackCommandExecutor.redo((Player)(sender), loc);
 			return true;
 		}
-		else if(cmd.getName().equalsIgnoreCase("/redo")&&args.length==3&&sender instanceof Player){
+		else if(cmd.getName().equalsIgnoreCase("/ulredo")&&args.length==3&&sender instanceof Player){
 			int x = Integer.parseInt(args[0]);
 			int y = Integer.parseInt(args[1]);
 			int z = Integer.parseInt(args[2]);
@@ -115,7 +122,7 @@ public class MainLogger extends JavaPlugin{
 			RollbackCommandExecutor.redo((Player)(sender), loc);
 			return true;
 		}
-		else if(cmd.getName().equalsIgnoreCase("/redo")&&args.length==6&&sender instanceof Player){
+		else if(cmd.getName().equalsIgnoreCase("/ulredo")&&args.length==6&&sender instanceof Player){
 			int x = Integer.parseInt(args[0]);
 			int y = Integer.parseInt(args[1]);
 			int z = Integer.parseInt(args[2]);
@@ -142,9 +149,8 @@ public class MainLogger extends JavaPlugin{
 		plugin=this;
 		t=new Translater(lang);
 		loadConfig();
-        if(UpdateCheck){
+        if(UpdateCheck)
         	checkUpdates();
-        }
 		if(period!=EnumPeriod.NEVER){
 			int days = Calendar.WEEK_OF_MONTH*7;
 			switch(period){
@@ -162,9 +168,8 @@ public class MainLogger extends JavaPlugin{
 				break;
 			}
 		}
-		else{
+		else
 			enableFileLoggers(false);
-		}
 		sql_ip=sql_ip.trim();
         if(sql_ip.length()>0&&sql_ip!="blank"&&!sql_ip.equalsIgnoreCase("blank")&&sql_ip!="null"&&!sql_ip.equalsIgnoreCase("null")){
             SQL sql = new SQL(this,sql_ip,sql_port,sql_user,sql_pass,sql_db,sql_table_prefix);
@@ -194,8 +199,46 @@ public class MainLogger extends JavaPlugin{
 				new org.ultralogger.sql.logger.PluginLogger(sql);
 		}
 		log.info(pref+"has been enabled");
+		dayChecker = createDayChecker();
+		dayChecker.start();
 	}
 	
+	public Timer createDayChecker() {
+		ActionListener action = new ActionListener(){
+			@SuppressWarnings("deprecation")
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(period!=EnumPeriod.NEVER){
+					int days = Calendar.WEEK_OF_MONTH*7;
+					switch(period){
+					case DAY:
+						//check if the day or the week or the month is different
+						if(Calendar.DAY_OF_MONTH!=date.getDay()||date.getDay()>=days-7&&date.getDay()<=days||Calendar.MONTH!=date.getMonth()){
+							plugin.getPluginLoader().disablePlugin(plugin);
+							plugin.getPluginLoader().enablePlugin(plugin);
+						}
+						break;
+					case WEEK:
+						//check if the week or if the month is different
+						if(date.getDay()>=days-7&&date.getDay()<=days||Calendar.MONTH!=date.getMonth()){
+							plugin.getPluginLoader().disablePlugin(plugin);
+							plugin.getPluginLoader().enablePlugin(plugin);
+						}
+						break;
+					case MONTH:
+						//check if the month is different
+						if(Calendar.MONTH!=date.getMonth()){
+							plugin.getPluginLoader().disablePlugin(plugin);
+							plugin.getPluginLoader().enablePlugin(plugin);
+						}
+						break;
+					}
+				}
+			}	
+		};
+		return new Timer(600000,action);
+	}
+
 	public void enableFileLoggers(boolean yes){
 		if(yes){
 			date = new Date(System.currentTimeMillis());
@@ -282,7 +325,7 @@ public class MainLogger extends JavaPlugin{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        UpdateCheck=Boolean.parseBoolean(prop.getProperty("Check for updates","true"));;
+        UpdateCheck=Boolean.parseBoolean(prop.getProperty("Check-for-updates","true"));;
 		player=Boolean.parseBoolean(prop.getProperty("Player-logger","true"));
 		chat=Boolean.parseBoolean(prop.getProperty("Chat-logger","true"));
 		command=Boolean.parseBoolean(prop.getProperty("Command-logger","true"));
@@ -319,7 +362,7 @@ public class MainLogger extends JavaPlugin{
 	public void saveConfiguration() {
 		try {
 			PrintWriter out =new PrintWriter(config);
-            out.println("Check for updates="+UpdateCheck);
+            out.println("Check-for-updates="+UpdateCheck);
 			out.println("InGame-Block-History="+block_history);
 			out.println("ItemID-toSee="+block_hist_itemID);
 			out.println("Block-logger="+block);
@@ -348,9 +391,8 @@ public class MainLogger extends JavaPlugin{
 				date =new Date(0);
 				out.println("LastDELtime="+0);
 			}
-			else{
+			else
 				out.println("LastDELtime="+date.getTime());
-			}
 			out.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
