@@ -176,6 +176,72 @@ public class Main extends JavaPlugin{
 		return new Timer(logConfig.getAutoSave()*1000,action);//The time is in ms so we convert into ms
 	}
 	
+	
+	public CommandManager getCommandManager() {
+		return cmdManager;
+	}
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
+		if(!(sender instanceof Player))
+			return true;
+		Player player = (Player) sender;
+		if(cmd.getName().equalsIgnoreCase("/ulundo") && args.length<3){ // If the player typed //undo then do the following...
+			Location loc = player.getLocation();
+			loc.add(0, -2, 0);
+			RollbackCommandExecutor.undo(player, loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/ulundo") && args.length==3){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(player.getLocation().getWorld(),x,y,z);
+			RollbackCommandExecutor.undo(player, loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/ulundo") && args.length==6){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(player.getLocation().getWorld(),x,y,z);
+			int x1 = Integer.parseInt(args[3]);
+			int y1 = Integer.parseInt(args[4]);
+			int z1 = Integer.parseInt(args[5]);
+			Location loc1 = new Location(player.getLocation().getWorld(),x1,y1,z1);
+			RollbackCommandExecutor.undo(player, loc,loc1);
+			return true;
+		}
+		if(cmd.getName().equalsIgnoreCase("/ulredo") && args.length<3){ // If the player typed //undo then do the following...
+			Location loc = player.getLocation();
+			loc.add(0, -2, 0);
+			RollbackCommandExecutor.redo(player, loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/ulredo") && args.length==3){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(player.getLocation().getWorld(),x,y,z);
+			RollbackCommandExecutor.redo(player, loc);
+			return true;
+		}
+		else if(cmd.getName().equalsIgnoreCase("/ulredo") && args.length==6){
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			int z = Integer.parseInt(args[2]);
+			Location loc = new Location(player.getLocation().getWorld(),x,y,z);
+			int x1 = Integer.parseInt(args[3]);
+			int y1 = Integer.parseInt(args[4]);
+			int z1 = Integer.parseInt(args[5]);
+			Location loc1 = new Location(player.getLocation().getWorld(),x1,y1,z1);
+			RollbackCommandExecutor.redo(player, loc,loc1);
+			return true;
+		}
+		//If this has happened the function will break and return true. if this hasn't happened the a value of false will be returned.
+		return false; 
+	}
+	
 	/**
 	 *  Get the Bukkit logger first, before we try to create our own
 	 */
@@ -298,71 +364,6 @@ public class Main extends JavaPlugin{
 	 */
 	public static boolean isAdmin(HumanEntity p){
 		return p.hasPermission("ul.admin") || p.hasPermission("ul.*") || p.isOp();
-	}
-
-	public CommandManager getCommandManager() {
-		return cmdManager;
-	}
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-		if(!(sender instanceof Player))
-			return true;
-		Player player = (Player) sender;
-		if(cmd.getName().equalsIgnoreCase("/ulundo") && args.length<3){ // If the player typed //undo then do the following...
-			Location loc = player.getLocation();
-			loc.add(0, -2, 0);
-			RollbackCommandExecutor.undo(player, loc);
-			return true;
-		}
-		else if(cmd.getName().equalsIgnoreCase("/ulundo") && args.length==3){
-			int x = Integer.parseInt(args[0]);
-			int y = Integer.parseInt(args[1]);
-			int z = Integer.parseInt(args[2]);
-			Location loc = new Location(player.getLocation().getWorld(),x,y,z);
-			RollbackCommandExecutor.undo(player, loc);
-			return true;
-		}
-		else if(cmd.getName().equalsIgnoreCase("/ulundo") && args.length==6){
-			int x = Integer.parseInt(args[0]);
-			int y = Integer.parseInt(args[1]);
-			int z = Integer.parseInt(args[2]);
-			Location loc = new Location(player.getLocation().getWorld(),x,y,z);
-			int x1 = Integer.parseInt(args[3]);
-			int y1 = Integer.parseInt(args[4]);
-			int z1 = Integer.parseInt(args[5]);
-			Location loc1 = new Location(player.getLocation().getWorld(),x1,y1,z1);
-			RollbackCommandExecutor.undo(player, loc,loc1);
-			return true;
-		}
-		if(cmd.getName().equalsIgnoreCase("/ulredo") && args.length<3){ // If the player typed //undo then do the following...
-			Location loc = player.getLocation();
-			loc.add(0, -2, 0);
-			RollbackCommandExecutor.redo(player, loc);
-			return true;
-		}
-		else if(cmd.getName().equalsIgnoreCase("/ulredo") && args.length==3){
-			int x = Integer.parseInt(args[0]);
-			int y = Integer.parseInt(args[1]);
-			int z = Integer.parseInt(args[2]);
-			Location loc = new Location(player.getLocation().getWorld(),x,y,z);
-			RollbackCommandExecutor.redo(player, loc);
-			return true;
-		}
-		else if(cmd.getName().equalsIgnoreCase("/ulredo") && args.length==6){
-			int x = Integer.parseInt(args[0]);
-			int y = Integer.parseInt(args[1]);
-			int z = Integer.parseInt(args[2]);
-			Location loc = new Location(player.getLocation().getWorld(),x,y,z);
-			int x1 = Integer.parseInt(args[3]);
-			int y1 = Integer.parseInt(args[4]);
-			int z1 = Integer.parseInt(args[5]);
-			Location loc1 = new Location(player.getLocation().getWorld(),x1,y1,z1);
-			RollbackCommandExecutor.redo(player, loc,loc1);
-			return true;
-		}
-		//If this has happened the function will break and return true. if this hasn't happened the a value of false will be returned.
-		return false; 
 	}
 
 }
