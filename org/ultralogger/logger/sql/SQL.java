@@ -70,7 +70,7 @@ public class SQL {
         Properties connectionProps = new Properties();
         connectionProps.put("user", this.userName);
         connectionProps.put("password", this.password);
-        conn = DriverManager.getConnection("jdbc:" + this.dbms + "://" + this.serverName + ":" + this.portNumber + "/",connectionProps);
+        conn = DriverManager.getConnection("jdbc:" + this.dbms + "://" + this.serverName + ":" + this.portNumber + "/?useUnicode=true&characterEncoding=utf-8",connectionProps);
         logger.info("Connected to database");
         return conn;
     }
